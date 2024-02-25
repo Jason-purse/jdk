@@ -741,6 +741,7 @@
   Bash</a>. No other shells are supported.</p>
 <p>At least version 3.2 of GNU Bash must be used.</p>
 <h2 id="running-configure">Running Configure</h2>
+<h3>运行配置</h3>
 <p>To build the JDK, you need a "configuration", which consists of a
   directory where to store the build output, coupled with information
   about the platform, the specific build machine, and choices that affect
@@ -770,6 +771,7 @@
     <code>bash configure --enable-debug --with-jvm-variants=server --enable-dtrace</code></p></li>
 </ul>
 <h3 id="common-configure-arguments">Common Configure Arguments</h3>
+<h4>普通配置参数</h4>
 <p>Here follows some of the most common and important
   <code>configure</code> argument.</p>
 <p>To get up-to-date information on <em>all</em> available
@@ -779,8 +781,14 @@
   <code>--dvidir</code>, that is not relevant to the JDK. To list only
   JDK-specific features, use <code>bash configure --help=short</code>
   instead.)</p>
+<p>
+  通过 bash configure --help=short 列出JDK特定的特性 ..
+</p>
 <h4 id="configure-arguments-for-tailoring-the-build">Configure Arguments
   for Tailoring the Build</h4>
+<h5>
+  为构建进行修剪，一些便捷配置参数 ..
+</h5>
 <ul>
   <li><code>--enable-debug</code> - Set the debug level to
     <code>fastdebug</code> (this is a shorthand for
@@ -824,19 +832,29 @@
     binary suitable for running on a <code>&lt;bits&gt;</code> platform. Use
     this to create 32-bit output on a 64-bit build platform, instead of
     doing a full cross-compile. (This is known as a <em>reduced</em>
-    build.)</li>
+    build.)
+    <p>
+      这可以称作为一种缩减构建,指定运行在给定多少位平台上的目标二进制工件 ..
+    </p>
+  </li>
+
 </ul>
 <p>On Linux, BSD and AIX, it is possible to override where Java by
   default searches for runtime/JNI libraries. This can be useful in
   situations where there is a special shared directory for system JNI
   libraries. This setting can in turn be overridden at runtime by setting
   the <code>java.library.path</code> property.</p>
+<p>
+  在Linux, ... 能够覆盖Java默认去搜索运行时/JNI 库的路径, 假设你的系统JNI库位于一个特定的共享目录 ,
+  这个配置也能够在运行时基于 java.library.path 属性进行覆盖 ..
+</p>
 <ul>
   <li><code>--with-jni-libpath=&lt;path&gt;</code> - Use the specified
     path as a default when searching for runtime libraries.</li>
 </ul>
 <h4 id="configure-arguments-for-native-compilation">Configure Arguments
   for Native Compilation</h4>
+<h5>进行原生编译的配置参数</h5>
 <ul>
   <li><code>--with-devkit=&lt;path&gt;</code> - Use this devkit for
     compilers, tools and resources</li>
@@ -857,6 +875,7 @@
 </ul>
 <h4 id="configure-arguments-for-external-dependencies">Configure
   Arguments for External Dependencies</h4>
+<h5>对于外部依赖的配置参数</h5>
 <ul>
   <li><code>--with-boot-jdk=&lt;path&gt;</code> - Set the path to the <a href="#boot-jdk-requirements">Boot JDK</a></li>
   <li><code>--with-freetype=&lt;path&gt;</code> - Set the path to <a href="#freetype">FreeType</a></li>
@@ -875,6 +894,10 @@
   replaced by an external version. To do so, specify <code>system</code>
   as the <code>&lt;source&gt;</code> option in these arguments. (The
   default is <code>bundled</code>).</p>
+<p>
+  某些第三方库(由JDK使用的,已经包括在JDK仓库中) .. 默认JDK 将会使用捆绑的版本,但是在Windows 或者AIX这是一个意外,它可能使用系统安装的 。。
+  当指定参数为system 将会通过外部版本覆盖捆绑库的版本 .. 默认是bundled ...
+</p>
 <ul>
   <li><code>--with-libjpeg=&lt;source&gt;</code> - Use the specified
     source for libjpeg</li>
@@ -896,9 +919,14 @@
     <code>default</code>) for linking the C++ runtime.</li>
 </ul>
 <h3 id="configure-control-variables">Configure Control Variables</h3>
+<h4>配置控制变量</h4>
 <p>It is possible to control certain aspects of <code>configure</code>
   by overriding the value of <code>configure</code> variables, either on
   the command line or in the environment.</p>
+<p>
+  这些是在构建过程中预先定义的一些变量,用来引导构建过程,一般不推荐修改,除非你非常熟系构建系统 ..
+  因为它可能很容易打断构建过程 .
+</p>
 <p>Normally, this is <strong>not recommended</strong>. If used
   improperly, it can lead to a broken configuration. Unless you're well
   versed in the build system, this is hard to use properly. Therefore,
@@ -912,11 +940,18 @@
   <code>bash configure MAKE=/opt/gnumake4.0/bin/make</code>.</p>
 <p>If a configure argument exists, use that instead, e.g. use
   <code>--with-jtreg</code> instead of setting <code>JTREGEXE</code>.</p>
+<p>
+  有一个点,当配置参数存在的时候,将使用配置参数,而不是控制变量,优先级配置参数更高 ..
+</p>
 <p>Also note that, despite what autoconf claims, setting
   <code>CFLAGS</code> will not accomplish anything. Instead use
   <code>--with-extra-cflags</code> (and similar for <code>cxxflags</code>
   and <code>ldflags</code>).</p>
+<p>
+  同样,配置CFLAGS虽然不会有啥用,但是配置参数变量即可生效 ...
+</p>
 <h2 id="running-make">Running Make</h2>
+<h3>运行Make</h3>
 <p>When you have a proper configuration, all you need to do to build the
   JDK is to run <code>make</code>. (But see the warning at <a href="#gnu-make">GNU Make</a> about running the correct version of
   make.)</p>
@@ -929,10 +964,14 @@
   only spend time recompiling what's changed (making it purely
   incremental) and only do the work that's needed to actually run and test
   your code.</p>
+<p>
+  增量构建,通过"exploded image"实现,只需要实际改变时,对改变部分进行构建 并对实际运行部分或者测试指定代码进行工作 ..
+</p>
 <p>The output of the exploded image resides in <code>$BUILD/jdk</code>.
   You can test the newly built JDK like this:
   <code>$BUILD/jdk/bin/java -version</code>.</p>
 <h3 id="common-make-targets">Common Make Targets</h3>
+<h4>常见的构建目标</h4>
 <p>Apart from the default target, here are some common make targets:</p>
 <ul>
   <li><code>hotspot</code> - Build all of hotspot (but only hotspot)</li>
@@ -1092,14 +1131,20 @@
   <code>debug</code> signing is chosen if it works. If nothing works, the
   codesign build step is disabled.</p>
 <h2 id="cross-compiling">Cross-compiling</h2>
+<h3>跨平台编译(交叉编译)</h3>
 <p>Cross-compiling means using one platform (the <em>build</em>
   platform) to generate output that can ran on another platform (the
   <em>target</em> platform).</p>
+<p>交叉编译意味着使用一个平台(构建平台)去生成能够运行在其他平台的输出(目标平台)</p>
 <p>The typical reason for cross-compiling is that the build is performed
   on a more powerful desktop computer, but the resulting binaries will be
   able to run on a different, typically low-performing system. Most of the
   complications that arise when building for embedded is due to this
   separation of <em>build</em> and <em>target</em> systems.</p>
+<p>
+  交叉编译的典型原因是，编译是在功能更强大的台式电脑上进行的，但生成的二进制文件可以在不同的、通常性能较低的系统上运行。
+  为嵌入式系统编译时出现的大多数复杂问题都是由于编译系统和目标系统的分离造成的。
+</p>
 <p>This requires a more complex setup and build procedure. This section
   assumes you are familiar with cross-compiling in general, and will only
   deal with the particularities of cross-compiling the JDK. If you are new
@@ -1181,6 +1226,10 @@ x86_64-linux-gnu-to-ppc64le-linux-gnu</code></pre>
   7.3 by default) to produce OpenJDK binaries which will run on all Linux
   systems with runtime libraries newer than the ones from Fedora 12 (e.g.
   Ubuntu 16.04, SLES 11 or RHEL 6).</p>
+<p>
+  这句话的意思是,通过devkit包,能够构建一个目标TARGET(能够运行在目标OS平台上),例如以Fedora12 为 sysroot环境,
+  那么构建出来的JDK 二进制文件支持在Fedora12 或者以上版本运行 ...
+</p>
 <h3 id="boot-jdk-and-build-jdk">Boot JDK and Build JDK</h3>
 <p>When cross-compiling, make sure you use a boot JDK that runs on the
   <em>build</em> system, and not on the <em>target</em> system.</p>
@@ -1197,6 +1246,7 @@ x86_64-linux-gnu-to-ppc64le-linux-gnu</code></pre>
   <strong>exactly</strong> match the current sources.</p>
 <h3 id="specifying-the-target-platform">Specifying the Target
   Platform</h3>
+<h4>指定目标平台</h4>
 <p>You <em>must</em> specify the target platform when cross-compiling.
   Doing so will also automatically turn the build into a cross-compiling
   mode. The simplest way to do this is to use the
