@@ -25,10 +25,8 @@
 
 package java.util;
 
-import java.io.IOException;
-import java.io.InvalidObjectException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
+import java.io.*;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.function.BiConsumer;
@@ -607,6 +605,9 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      *         previously associated {@code null} with {@code key}.)
      */
     public V put(K key, V value) {
+//        if(System.out != null) {
+//            System.out.println(String.format("put: key: {},value: {}", key,value));
+//        }
         return putVal(hash(key), key, value, false, true);
     }
 

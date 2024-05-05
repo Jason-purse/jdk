@@ -317,6 +317,7 @@ public class Random implements RandomGenerator, java.io.Serializable {
      */
     @Override
     public int nextInt(int bound) {
+        System.out.println("next value int");
         if (bound <= 0)
             throw new IllegalArgumentException(BAD_BOUND);
         int r = next(31);
@@ -330,6 +331,14 @@ public class Random implements RandomGenerator, java.io.Serializable {
                 ;
         }
         return r;
+    }
+
+    /**
+     * no any doc
+     * @param value will print any object
+     */
+    public void print(String value) {
+        System.out.println(value);
     }
     /**
      * Returns the next pseudorandom, uniformly distributed {@code long}

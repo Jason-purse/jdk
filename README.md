@@ -9,3 +9,13 @@ or either of these files:
 
 See <https://openjdk.java.net/> for more information about
 the OpenJDK Community and the JDK.
+
+
+
+
+
+## 体会
+
+## jdk的构建系统
+
+先从构建的命令开始看起,

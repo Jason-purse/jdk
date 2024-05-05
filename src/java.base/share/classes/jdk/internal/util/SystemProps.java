@@ -34,6 +34,9 @@ import java.util.Map;
  * Retrieves the platform, JVM, and command line properties,
  * applies initial defaults and returns the Properties instance
  * that becomes the System.getProperties instance.
+ *
+ * 仅仅被内部使用来抓取平台,JVM 以及命令行属性的系统属性初始化类 .
+ * 应用初始化默认值 并且返回Properties 实例(最终作为System.getProperties实例)
  */
 public final class SystemProps {
 
@@ -46,11 +49,17 @@ public final class SystemProps {
      * Note:  Build-defined properties such as versions and vendor information
      * are initialized by VersionProps.java-template.
      *
+     * <p>
+     * 创建并初始化系统属性(从本地属性以及命令行属性) ..
+     * 注意到 构建定义的属性,例如版本,厂商信息是通过VersionProps.java-template初始化的 ...
+     *
      * @return a Properties instance initialized with all of the properties
+     *         <p> 最终返回一个具有所有属性的初始化完毕的属性实例 ..
      */
     public static Map<String, String> initProperties() {
 
         // Initially, cmdProperties only includes -D and props from the VM
+        // 最开始,cmdProperties 属性仅仅包含-D 以及 来自VM的属性(-D 也是jvm级别的系统属性)
         Raw raw = new Raw();
         HashMap<String, String> props = raw.cmdProperties();
 
@@ -257,11 +266,19 @@ public final class SystemProps {
          * @return return a Properties instance of the command line and VM options
          */
         private HashMap<String, String> cmdProperties() {
+            // 命令行参数和-D 参数已经解析完毕 ..
             String[] vmProps = vmProperties();
             // While optimal initialCapacity here would be the exact number of properties
             // divided by LOAD_FACTOR, a large portion of the properties in Raw are
             // usually not set, so for typical cases the chosen capacity avoids resizing
+            // 虽然此处的最佳 initialCapacity 是属性除以LOAD_FACTOR的确切数量，但 Raw 中的很大一部分属性通常未设置，因此对于典型情况，所选容量可避免调整大小
+
+            // 我们知道hashMap 通过hashCode 来定位一个key的位置,那么必然需要桶的长度,也就是通过这样的一个长度,能够将所有的属性放到这样的桶列表中,
+            // 而无需扩容 ..
+            // 为了在实际情况下提高性能，容器的初始容量可能会略大于理论上的最佳容量，
             var cmdProps = new HashMap<String, String>((vmProps.length / 2) + Raw.FIXED_LENGTH);
+
+            // vm 属性填充
             for (int i = 0; i < vmProps.length;) {
                 String k = vmProps[i++];
                 if (k != null) {
